@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Soundcloud mobile developer challenge!</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+  
+  <link rel="stylesheet" href="style.css" />
+  
+  <!-- Mobile Favicon stuff -->
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
+  
+  <!-- Scripts -->
+  
+  <script src="http://connect.soundcloud.com/sdk.js" type="text/JavaScript"></script>
+  <script type="text/JavaScript">
+    const CLIENT_ID = "3e58944847ea1e3208bf93b1f08044b9";
+    SC.initialize({
+      client_id: CLIENT_ID
+    });
+  </script>
+  
+  <script type="text/javascript">
+    /** http://140byt.es/keywords/ajax */
+    var jsonp = function j(u,f,d,s){with(document)body.appendChild(createElement(s="script")).src=u+(d=s+(j.i=j.i+1||1));this[d]=function(x){this[d]=f(x)}}
+    var resolve = function(url, callback){ jsonp(url, callback); };
+    
+    window.onload = function(){
+      
+      
+      
+      var audio = new Audio();
+      var select_track = document.getElementById("select_track");
+      select_track.onchange = function(ev){
+        loadTrack(this.value);
+      };
+      
+      function loadTrack(trackPath){
+        resolve(trackPath, playTrack);
+        audio = new Audio();
+        console.log("track", trackPath);
+        SC.get(trackPath, null, playTrack);
+      };
+      
+
+      
+      function playTrack(){
+        console.log(arguments);
+      }
+      
+      
+      loadTrack(select_track.value);
+    };
+  </script>
+  
+</head>
+<body>
+  
+  <label for="select_track">Select a track</label>
+  <select id="select_track">
+    <option value="http://soundcloud.com/roskelld/sigur-ros-sped-up-800">Sigur Rós sped up 800%</option>
+    <option value="/forss/soulhack">Soulhack</option>
+    <option value="/oscardeavila/mountain-bike-down-hill">MOUNTAIN BIKE DOWN HILL</option>
+  </select>
+  
+  <audio id="the_player"><audio>
+
+  <div id="player_container">
+    <img id="cover_image" src="" alt="Current cover image" />
+    <img id="wave_form" src="" alt="Current wave form">
+  </div>
+  
+  <ul id="comments"></ul>
+</body>
+</html>
