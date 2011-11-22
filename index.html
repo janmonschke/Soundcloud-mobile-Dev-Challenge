@@ -25,9 +25,6 @@
   </script>
   
   <script type="text/javascript">
-    /** http://140byt.es/keywords/ajax */
-    var jsonp = function j(u,f,d,s){with(document)body.appendChild(createElement(s="script")).src=u+(d=s+(j.i=j.i+1||1));this[d]=function(x){this[d]=f(x)}}
-    var resolve = function(url, callback){ jsonp(url, callback); };
     
     window.onload = function(){
       
@@ -40,7 +37,6 @@
       };
       
       function loadTrack(trackPath){
-        resolve(trackPath, playTrack);
         audio = new Audio();
         console.log("track", trackPath);
         SC.get(trackPath, null, playTrack);
