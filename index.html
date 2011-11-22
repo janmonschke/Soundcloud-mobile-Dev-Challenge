@@ -15,7 +15,8 @@
   <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
   
   <!-- Scripts -->
-  
+  <script src="js/zepto.min.js" type="text/JavaScript"></script>
+  <script src="js/mustache.js" type="text/JavaScript"></script>
   <script src="http://connect.soundcloud.com/sdk.js" type="text/JavaScript"></script>
   <script type="text/JavaScript">
     const CLIENT_ID = "3e58944847ea1e3208bf93b1f08044b9";
@@ -24,52 +25,78 @@
     });
   </script>
   
-  <script type="text/javascript">
-    
+  <script type="text/javascript">    
     window.onload = function(){
-      
-      
+      var TEMPLATES = {
+        player : $("#tmpl_player").html(),
+        comment : $("#tmpl_comment").html()
+      };
       
       var audio = new Audio();
-      var select_track = document.getElementById("select_track");
-      select_track.onchange = function(ev){
-        loadTrack(this.value);
-      };
+      var select_track = $("#select_track");
+      
+      select_track.bind("change",function(ev){
+        loadTrack(select_track.val());
+      });
       
       function loadTrack(trackPath){
-        audio = new Audio();
-        console.log("track", trackPath);
-        SC.get(trackPath, null, playTrack);
+        //if ($("#the_player").length > 0)
+          //$("#the_player").stop();
+        SC.get(trackPath, gotTrackInfo);
+      };
+
+      function gotTrackInfo(track){
+        console.log(arguments);
+        $("#the_player").remove();
+        var player_html = Mustache.to_html(TEMPLATES.player, track);
+        console.log($("#player_container"), player_html);
+        $("#player_container").html(player_html);
+        $("#controls button").click(function(){ console.dir($("#the_player"));$("#the_player")[0].play(); });
       };
       
-
-      
-      function playTrack(){
-        console.log(arguments);
-      }
-      
-      
-      loadTrack(select_track.value);
+      loadTrack(select_track.val());
     };
   </script>
   
 </head>
 <body>
+  <header class="shadow">
+    <a href="http://soundcloud.com" id="logo"></a>
+  </header>
   
-  <label for="select_track">Select a track</label>
-  <select id="select_track">
-    <option value="http://soundcloud.com/roskelld/sigur-ros-sped-up-800">Sigur Rós sped up 800%</option>
-    <option value="/forss/soulhack">Soulhack</option>
-    <option value="/oscardeavila/mountain-bike-down-hill">MOUNTAIN BIKE DOWN HILL</option>
-  </select>
-  
-  <audio id="the_player"><audio>
+  <section id="instructions" class="shadow">
+    <label for="select_track">Select a track</label>
+    <!-- Got the IDs from the resolver API beforehand -->
+    <select id="select_track">
+      <option value="/tracks/5968824.json">MOUNTAIN BIKE DOWN HILL</option>
+      <option value="/tracks/4663645.json">Sigur Rós sped up 800%</option>
+      <option value="/tracks/291.json">Soulhack</option>
+    </select>
+  </section>
+
 
   <div id="player_container">
-    <img id="cover_image" src="" alt="Current cover image" />
-    <img id="wave_form" src="" alt="Current wave form">
   </div>
   
   <ul id="comments"></ul>
+  
+  <!-- TEMPLATES -->
+  <script id="tmpl_player" type="template/mustache">
+    <img id="wave_form" src="{{waveform_url}}" alt="Current wave form">
+    <div id="controls">
+      <button class="play"></button>
+    </div>
+    <audio controls id="the_player">
+      <source src="{{stream_url}}?client_id=3e58944847ea1e3208bf93b1f08044b9" />
+    </audio>
+    <img src="{{artwork_url}}" alt="user image" />
+    {{user.username}}
+    {{title}}
+    {{duration}}
+  </script>
+  
+  <script id="tmpl_comment" type="template/mustache">
+    <div>osdfin</div>
+  </script>
 </body>
 </html>
