@@ -40,8 +40,8 @@
       });
       
       function loadTrack(trackPath){
-        //if ($("#the_player").length > 0)
-          //$("#the_player").stop();
+        if ($("#the_player").length > 0)
+          $("#the_player")[0].pause();
         SC.get(trackPath, gotTrackInfo);
       };
 
@@ -51,7 +51,16 @@
         var player_html = Mustache.to_html(TEMPLATES.player, track);
         console.log($("#player_container"), player_html);
         $("#player_container").html(player_html);
-        $("#controls button").click(function(){ console.dir($("#the_player"));$("#the_player")[0].play(); });
+        $("#controls button").click(function(){
+          var player = $("#the_player")[0];
+          if(player.paused){
+            $(this).removeClass("play").addClass("pause");
+            player.play();
+          }else{
+            $(this).removeClass("pause").addClass("play")
+            player.pause();
+          }
+        });
       };
       
       loadTrack(select_track.val());
