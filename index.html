@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
   
   <!-- Scripts -->
-  <!--script src="http://debug.phonegap.com/target/target-script-min.js#eisbaer"></script-->
+  <script src="http://debug.phonegap.com/target/target-script-min.js#eisbaer"></script>
   <script src="js/zepto.min.js" type="text/JavaScript"></script>
   <script src="js/mustache.js" type="text/JavaScript"></script>
   <script src="http://connect.soundcloud.com/sdk.js" type="text/JavaScript"></script>
@@ -55,6 +55,10 @@
         
         var player = $("#the_player")[0];
         var $player = $(player);
+        
+        $player.bind("error", function(){
+          console.log("there was an error", error);
+        });
         
         $player.bind("progress", function(){
           var progress = Math.ceil((player.buffered.end(0) / player.duration) * 100);
