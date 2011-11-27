@@ -7,7 +7,7 @@ body{
 }
 
 audio{
-    z-index: 100;
+    display:none;
 }
 
 header{
