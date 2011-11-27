@@ -15,6 +15,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
   
   <!-- Scripts -->
+  <!--script src="http://debug.phonegap.com/target/target-script-min.js#eisbaer"></script-->
   <script src="js/zepto.min.js" type="text/JavaScript"></script>
   <script src="js/mustache.js" type="text/JavaScript"></script>
   <script src="http://connect.soundcloud.com/sdk.js" type="text/JavaScript"></script>
@@ -46,13 +47,34 @@
       };
 
       function gotTrackInfo(track){
-        console.log(arguments);
+        console.log("the track", track);
+        
         $("#the_player").remove();
         var player_html = Mustache.to_html(TEMPLATES.player, track);
-        console.log($("#player_container"), player_html);
         $("#player_container").html(player_html);
+        
+        var player = $("#the_player")[0];
+        var $player = $(player);
+        
+        $player.bind("progress", function(){
+          var progress = Math.ceil((player.buffered.end(0) / player.duration) * 100);
+          $('#wave_form_progress').css("width",progress+"%");
+        });
+          
+        $player.bind("timeupdate", function(){
+          $('#wave_form_played').css("width", Math.ceil((player.currentTime / player.duration)*100)+"%");
+        });
+
+        $player.bind("canplay", function(){
+          $("#wave_form_container").bind("touchstart", function(event){
+            var relative_position = event.touches[0].clientX / $(this).width();
+            console.log($(this).width() + " " + relative_position + " " + (player.duration * relative_position));
+            player.currentTime = player.duration * relative_position;
+          });
+        });
+        
+        
         $("#controls button").click(function(){
-          var player = $("#the_player")[0];
           if(player.paused){
             $(this).removeClass("play").addClass("pause");
             player.play();
@@ -91,12 +113,19 @@
   
   <!-- TEMPLATES -->
   <script id="tmpl_player" type="template/mustache">
-    <img id="wave_form" src="{{waveform_url}}" alt="Current wave form">
-    <div id="controls">
-      <button class="play"></button>
+    <div id="wave_form_container">
+      <div id="controls">
+        <button class="play"></button>
+      </div>
+      <div id="wave_form_progress"></div>
+      <div id="wave_form_played"></div>
+      <img id="wave_form" src="{{waveform_url}}" alt="Current wave form">
     </div>
+    
+    
     <audio controls id="the_player">
       <source src="{{stream_url}}?client_id=3e58944847ea1e3208bf93b1f08044b9" />
+      <p>Your browser is currently not supported, we are sorry!</p>
     </audio>
     <img src="{{artwork_url}}" alt="user image" />
     {{user.username}}
