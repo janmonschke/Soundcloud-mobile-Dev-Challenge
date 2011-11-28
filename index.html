@@ -68,13 +68,13 @@
           var progress = Math.ceil((player.buffered.end(0) / player.duration) * 100);
           $('#wave_form_progress').css("width",progress+"%");
         });
-          
-        $player.bind("timeupdate", function(){
-          console.log("timeupdate", ((player.currentTime / player.duration)*100)+"%");
-          $('#wave_form_played').css("width", ((player.currentTime / player.duration)*100)+"%");
-        });
 
         $player.bind("canplay", function(){
+          $player.bind("timeupdate", function(){
+            console.log("timeupdate", ((player.currentTime / player.duration)*100)+"%");
+            $('#wave_form_played').css("width", ((player.currentTime / player.duration)*100)+"%");
+          });
+          
           $("#wave_form_container").bind("touchstart", function(event){
             var relative_position = (event.touches[0].clientX - 70) / $(this).width();
             console.log($(this).width() + " " + relative_position + " " + (player.duration * relative_position));
