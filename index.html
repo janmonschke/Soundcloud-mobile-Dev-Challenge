@@ -47,6 +47,7 @@
       };
 
       function gotTrackInfo(track){
+        if(!track.artwork_url) track.artwork_url = "http://placekitten.com/100/100"
         console.log("the track", track);
         
         $("#the_player").remove();
