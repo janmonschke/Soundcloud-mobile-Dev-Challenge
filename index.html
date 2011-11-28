@@ -54,6 +54,9 @@
         var player_html = Mustache.to_html(TEMPLATES.player, track);
         $("#player_container").html(player_html);
         
+        /** please skip the next line :P I just couldn't find out why the iphone renders this wrong */
+        $("#controls").css("margin-top","-2px");
+        
         var player = $("#the_player")[0];
         var $player = $(player);
         
