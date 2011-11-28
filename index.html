@@ -67,6 +67,7 @@
         });
           
         $player.bind("timeupdate", function(){
+          console.log("timeupdate", ((player.currentTime / player.duration)*100)+"%");
           $('#wave_form_played').css("width", ((player.currentTime / player.duration)*100)+"%");
         });
 
