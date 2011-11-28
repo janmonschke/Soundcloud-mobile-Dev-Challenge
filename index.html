@@ -118,17 +118,19 @@
   
   <!-- TEMPLATES -->
   <script id="tmpl_player" type="template/mustache">
-    <div id="wave_form_container">
+    <div id="visual_player_container">
       <div id="controls">
         <button class="play"></button>
       </div>
-      <div id="wave_form_progress"></div>
-      <div id="wave_form_played"></div>
-      <img id="wave_form" src="{{waveform_url}}" alt="Current wave form">
+      <div id="wave_form_container">
+        <div id="wave_form_progress"></div>
+        <div id="wave_form_played"></div>
+        <img id="wave_form" src="{{waveform_url}}" alt="Current wave form">
+      </div>
     </div>
     
     
-    <audio controls id="the_player">
+    <audio id="the_player">
       <source src="{{stream_url}}?client_id=3e58944847ea1e3208bf93b1f08044b9" />
       <p>Your browser is currently not supported, we are sorry!</p>
     </audio>
