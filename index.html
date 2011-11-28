@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
   
   <!-- Scripts -->
-  <script src="http://debug.phonegap.com/target/target-script-min.js#eisbaer"></script>
+  <!--script src="http://debug.phonegap.com/target/target-script-min.js#eisbaer"></script-->
   <script src="js/zepto.min.js" type="text/JavaScript"></script>
   <script src="js/mustache.js" type="text/JavaScript"></script>
   <script src="http://connect.soundcloud.com/sdk.js" type="text/JavaScript"></script>
@@ -53,9 +53,6 @@
         $("#the_player").remove();
         var player_html = Mustache.to_html(TEMPLATES.player, track);
         $("#player_container").html(player_html);
-        
-        /** please skip the next line :P I just couldn't find out why the iphone renders this wrong */
-        if($.os.iphone) $("#controls").css("margin-top","-2px");
         
         var player = $("#the_player")[0];
         var $player = $(player);
