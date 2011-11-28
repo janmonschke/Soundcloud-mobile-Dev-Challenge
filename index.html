@@ -77,7 +77,7 @@
           
           $("#wave_form_container").bind("touchstart", function(event){
             var relative_position = (event.touches[0].clientX - 70) / $(this).width();
-            console.log($(this).width() + " " + relative_position + " " + (player.duration * relative_position));
+            //console.log($(this).width() + " " + relative_position + " " + (player.duration * relative_position));
             player.currentTime = player.duration * relative_position;
           });
         });
