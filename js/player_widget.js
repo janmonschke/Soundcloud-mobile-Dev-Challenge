@@ -30,7 +30,11 @@ PlayerWidget.prototype.__trackReceived = function(track){
   
   this.$player.bind("timeupdate", this.updatePlayeProgress);
   
-  $("#wave_form_container").bind("touchstart", this.touchToSeek);
+  var that = this;
+  this.$player.bind("canplay", function(){
+    $("#wave_form_container").bind("touchstart", that.touchToSeek);
+  });
+  
   
   $("#controls button").bind("touchstart", this.buttonTouched);
   
