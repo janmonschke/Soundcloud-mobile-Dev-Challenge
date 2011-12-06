@@ -67,8 +67,9 @@ PlayerWidget.prototype.buttonTouched = function(){
     if(navigator.userAgent.toLowerCase().indexOf('android') != -1){
       this.__interVal = setInterval(this.updatePlayedProgress, 200);
     }
-    else
+    else{
       this.$player.bind("timeupdate", this.updatePlayedProgress);
+    }
 
     $("#controls button").removeClass("play").addClass("pause");
     this.player.play();
