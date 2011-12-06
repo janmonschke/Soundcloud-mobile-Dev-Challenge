@@ -51,6 +51,7 @@ PlayerWidget.prototype.loadingProgress = function(){
 };
 
 PlayerWidget.prototype.updatePlayedProgress = function(){
+  alert("" + this.player.currentTime + " " + this.player.duration);
   $('#wave_form_played').css("width", ((this.player.currentTime / this.player.duration)*100)+"%");
 };
 
@@ -64,8 +65,7 @@ PlayerWidget.prototype.buttonTouched = function(){
     // due to problems with the android browser not firing timeupdate events (at least they didn't fire on my milestone)
     // set an interval for updating the progress
     if(navigator.userAgent.toLowerCase().indexOf('android') != -1){
-      alert("test");
-      this.__interVal = setInterval(this.updatePlayedProgress, 500);
+      this.__interVal = setInterval(this.updatePlayedProgress, 200);
     }
     else
       this.$player.bind("timeupdate", this.updatePlayedProgress);
