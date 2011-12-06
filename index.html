@@ -17,8 +17,12 @@
   <!-- Scripts -->
   <!--script src="http://debug.phonegap.com/target/target-script-min.js#eisbaer"></script-->
   <script src="js/zepto.min.js" type="text/JavaScript"></script>
+  <script src="js/underscore.js" type="text/JavaScript"></script>
   <script src="js/mustache.js" type="text/JavaScript"></script>
   <script src="http://connect.soundcloud.com/sdk.js" type="text/JavaScript"></script>
+  <script src="js/comments_widget.js" type="text/JavaScript"></script>
+  <script src="js/player_widget.js" type="text/JavaScript"></script>
+  <script src="js/main.js" type="text/JavaScript"></script>
   <script type="text/JavaScript">
     const CLIENT_ID = "3e58944847ea1e3208bf93b1f08044b9";
     SC.initialize({
@@ -27,72 +31,21 @@
   </script>
   
   <script type="text/javascript">    
-    window.onload = function(){
-      var TEMPLATES = {
-        player : $("#tmpl_player").html(),
-        comment : $("#tmpl_comment").html()
-      };
-      
-      var audio = new Audio();
-      var select_track = $("#select_track");
-      
-      select_track.bind("change",function(ev){
-        loadTrack(select_track.val());
-      });
-      
-      function loadTrack(trackPath){
-        if ($("#the_player").length > 0)
-          $("#the_player")[0].pause();
-        SC.get(trackPath, gotTrackInfo);
-      };
+    
 
-      function gotTrackInfo(track){
-        if(!track.artwork_url) track.artwork_url = "http://placekitten.com/100/100"
-        console.log("the track", track);
-        
-        $("#the_player").remove();
-        var player_html = Mustache.to_html(TEMPLATES.player, track);
-        $("#player_container").html(player_html);
-        
-        var player = $("#the_player")[0];
-        var $player = $(player);
-        
-        $player.bind("error", function(){
-          console.log("there was an error", error);
-        });
-        
-        $player.bind("progress", function(){
-          var progress = Math.ceil((player.buffered.end(0) / player.duration) * 100);
-          $('#wave_form_progress').css("width",progress+"%");
-        });
-
-        $player.bind("canplay", function(){
-          $player.bind("timeupdate", function(){
-            console.log("timeupdate", ((player.currentTime / player.duration)*100)+"%");
-            $('#wave_form_played').css("width", ((player.currentTime / player.duration)*100)+"%");
-          });
-          
-          $("#wave_form_container").bind("touchstart", function(event){
-            var relative_position = (event.touches[0].clientX - 70) / $(this).width();
-            //console.log($(this).width() + " " + relative_position + " " + (player.duration * relative_position));
-            player.currentTime = player.duration * relative_position;
-          });
-        });
-        
-        
-        $("#controls button").click(function(){
-          if(player.paused){
-            $(this).removeClass("play").addClass("pause");
-            player.play();
-          }else{
-            $(this).removeClass("pause").addClass("play")
-            player.pause();
-          }
-        });
-      };
-      
-      loadTrack(select_track.val());
-    };
+            // 
+            // function gotTrackInfo(track, trackPath){
+            //   
+            //   SC.get(trackPath.replace(".json", "/comments.json"), gotTrackComments);
+            //   console.log("the track", track);
+            //   
+            //   
+            // };
+            // 
+            // 
+            // 
+            // loadTrack(select_track.val());
+    
   </script>
   
 </head>
@@ -105,9 +58,10 @@
     <label for="select_track">Select a track</label>
     <!-- Got the IDs from the resolver API beforehand -->
     <select id="select_track">
+      <option value="/tracks/581863.json">BUlletproof</option>
+      <option value="/tracks/291.json">Soulhack</option>
       <option value="/tracks/5968824.json">MOUNTAIN BIKE DOWN HILL</option>
       <option value="/tracks/4663645.json">Sigur Rós sped up 800%</option>
-      <option value="/tracks/291.json">Soulhack</option>
     </select>
   </section>
 
@@ -119,12 +73,19 @@
   
   <!-- TEMPLATES -->
   <script id="tmpl_player" type="template/mustache">
+    <div id="artist_info">
+      <img src="{{artwork_url}}" alt="user image" />
+      {{user.username}}
+      {{title}}
+      {{duration}}
+    </div>
     <div id="visual_player_container">
       <div id="controls">
         <button class="play"></button>
       </div>
       <div id="wave_form_container">
         <div id="wave_form_progress"></div>
+        <div id="wave_form_comments"></div>
         <div id="wave_form_played"></div>
         <img id="wave_form" src="{{waveform_url}}" alt="Current wave form">
       </div>
@@ -135,14 +96,17 @@
       <source src="{{stream_url}}?client_id=3e58944847ea1e3208bf93b1f08044b9" />
       <p>Your browser is currently not supported, we are sorry!</p>
     </audio>
-    <img src="{{artwork_url}}" alt="user image" />
-    {{user.username}}
-    {{title}}
-    {{duration}}
   </script>
   
   <script id="tmpl_comment" type="template/mustache">
-    <div>osdfin</div>
+    <li class="comment" data-url-second="{{ time }}">
+      <img src="{{ user.avatar_url }}" alt="avatar"/>
+      <div class="content">
+        <span class="time" data-timestamp="{{ timestamp }}">{{ time }}</span>
+        {{ body }}
+        <a href="{{ user.permalink_url }}">{{ user.username }}</a>
+      </div>
+    </li>
   </script>
 </body>
 </html>

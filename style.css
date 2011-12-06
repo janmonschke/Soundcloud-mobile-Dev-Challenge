@@ -30,6 +30,18 @@ header{
     background-image: -webkit-gradient(linear,left top,left bottom,from(#5a5a5a),to(#464646));
 }
 
+#artist_info{
+    margin: 5px 0px;
+    position: relative;
+    min-height: 100px;
+}
+
+#artist_info img{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
 #controls{
 
     position: absolute;
@@ -66,7 +78,7 @@ header{
     margin-left: 70px;
 }
 
-#wave_form_progress, #wave_form_played, #wave_form{
+#wave_form_comments, #wave_form_progress, #wave_form_played, #wave_form{
     width: 100%;
     position: absolute;
     top: 0px;
@@ -82,37 +94,59 @@ header{
     -webkit-transition: width .3s ease-in;
 }
 
-#wave_form_played{
+.wave_form_comment{
+    width: 1px;
+    height: 100%;
+    z-index: 100;
+    position: absolute;
+    background: #2D80FF;
+    opacity: 0;
+    -webkit-transition: opacity .3s ease-in;
+}
 
+#wave_form_played{
     background-color: rgba(241,32,0,.3);
     border-right: 1px solid #F12000;
     z-index: 3;
-    
     width: 0px;
+}
+
+#comments{
+    padding: 0px;
+}
+
+.comment{
+    position: relative;
+    list-style-type: none;
+    height: 40px;
+    margin: 5px;
+    background-color: #ddd;
+    border-radius: 4px;
+    min-height: 60px;
+}
+
+.comment img{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 40px;
+    border-top-left-radius: 4px;
+}
+
+.comment .content{
+    margin-left: 45px;
+    min-height: 40px;
+}
+
+.comment .time{
+    background-color: #bbb;
+    border-radius: 3px;
+}
+
+.comment .time:hover{
+    background-color: #aaa;
 }
 
 .shadow{
     -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.5);
 }
-/* Media Queries by getskeleton.com */
-	
-/* iPad Portrait/Browser */
-@media only screen and (min-width: 768px) and (max-width: 991px) {}
-
-/* Mobile/Browser */
-@media only screen and (max-width: 767px) {}
-
-/* Mobile Landscape/Browser */
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
-
-/* Anything smaller than standard 960 */
-@media only screen and (max-width: 959px) {}
-
-/* iPad Portrait Only */
-@media only screen and (min-width: 768px) and (max-width: 991px) and (max-device-width: 1000px) {}
-
-/* Mobile Only */
-@media only screen and (max-width: 767px) and (max-device-width: 1000px) {}
-
-/* Mobile Landscape Only */
-@media only screen and (min-width: 480px) and (max-width: 767px) and (max-device-width: 1000px) {}
