@@ -32,7 +32,7 @@ PlayerWidget.prototype.__trackReceived = function(track){
   
   $("#wave_form_container").bind("touchstart", this.touchToSeek);
   
-  $("#controls button").click(this.buttonClicked);
+  $("#controls button").bind("touchstart", this.buttonTouched);
   
 };
 
@@ -55,10 +55,10 @@ PlayerWidget.prototype.updatePlayeProgress = function(){
 
 PlayerWidget.prototype.touchToSeek = function(event){
   var relative_position = (event.touches[0].clientX - 70) / this.$player.width();
-  this.player.currentTime = this.duration * relative_position;
+  this.player.currentTime = this.player.duration * relative_position;
 };
 
-PlayerWidget.prototype.buttonClicked = function(){
+PlayerWidget.prototype.buttonTouched = function(){
   if(this.player.paused){
     $("#controls button").removeClass("play").addClass("pause");
     this.player.play();

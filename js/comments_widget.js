@@ -16,26 +16,27 @@ CommentsWidget.prototype.__commentsReceived = function(comments){
   var commentsList = $('#comments');
   commentsList.html("");
   var player = $("#the_player")[0];
-  var curr = null;
   
   // render each comment
   var len = comments.length;
+  var curr = null;
   for(var i = 0; i < len; i++){
     curr = comments[i];
     if(curr.timestamp > 0){
       // get the timestamp in a parsed format
       curr.time = Helper.timestampToTimestring(curr.timestamp);
       
+      // add a comment bar
       var commentBar = $('<div class="wave_form_comment"></div>');
       var currPosition = (curr.timestamp / this.track.duration) * $('#wave_form').width();
       commentBar.css("left", currPosition + "px");
       $('#wave_form_comments').append(commentBar);
     }
-    setTimeout(function(){$('.wave_form_comment').css("opacity", 1)}, 1000);
+    
     commentsList.append(Mustache.to_html(TEMPLATES.comment, curr));
   }   
   
-  $('.wave_form_comment').css('opacity', 1);
+  $(".wave_form_comment").css("opacity", 1);
   
   // seek to comment time on tap
   $('.time').each(function(index, elem){

@@ -97,7 +97,6 @@ header{
 .wave_form_comment{
     width: 1px;
     height: 100%;
-    z-index: 100;
     position: absolute;
     background: #2D80FF;
     opacity: 0;
