@@ -58,7 +58,7 @@ PlayerWidget.prototype.updatePlayeProgress = function(){
 };
 
 PlayerWidget.prototype.touchToSeek = function(event){
-  var relative_position = (event.touches[0].clientX - 70) / this.$player.width();
+  var relative_position = (event.touches[0].clientX - 70 ) / $("#wave_form_container").width();
   this.player.currentTime = this.player.duration * relative_position;
 };
 
