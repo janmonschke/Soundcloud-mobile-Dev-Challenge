@@ -63,8 +63,10 @@ PlayerWidget.prototype.buttonTouched = function(){
   if(this.player.paused){
     // due to problems with the android browser not firing timeupdate events (at least they didn't fire on my milestone)
     // set an interval for updating the progress
-    if(navigator.userAgent.toLowerCase().indexOf('android') != -1)
+    if(navigator.userAgent.toLowerCase().indexOf('android') != -1){
+      alert("test");
       this.__interVal = setInterval(this.updatePlayedProgress, 500);
+    }
     else
       this.$player.bind("timeupdate", this.updatePlayedProgress);
 
