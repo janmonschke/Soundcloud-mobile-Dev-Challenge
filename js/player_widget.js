@@ -9,8 +9,10 @@ PlayerWidget.prototype.init = function(){
 
 PlayerWidget.prototype.__trackReceived = function(track){
   this.track = track;
+  
   // prepare data for rendering
   if(!track.artwork_url) track.artwork_url = "http://placehold.it/100/666/fff.png&text=No Cover Art"
+  track.duration_string = Helper.durationString(0, this.track.duration);
   
   // remove old player if present
   $("#the_player").remove();
@@ -53,6 +55,7 @@ PlayerWidget.prototype.loadingProgress = function(){
 };
 
 PlayerWidget.prototype.updatePlayeProgress = function(){
+  $('#duration').text(Helper.durationString(this.player.currentTime * 1000, this.player.duration * 1000));
   $('#wave_form_played').css("width", ((this.player.currentTime / this.player.duration)*100)+"%");
 };
 
@@ -69,6 +72,7 @@ PlayerWidget.prototype.buttonTouched = function(){
     $("#controls button").removeClass("pause").addClass("play")
     this.player.pause();
   }
+  return false;
 };
 
 window.PlayerWidget = PlayerWidget;

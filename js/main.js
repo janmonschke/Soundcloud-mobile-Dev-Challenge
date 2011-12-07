@@ -9,10 +9,15 @@ window.addEventListener("load",function(){
     /** converts a SC-timestamp to the MM:SS format */
     timestampToTimestring : function(timestamp){
       var minutes = Math.floor((timestamp / 1000) / 60) + ""
-      if(minutes.length < 2) minutes = "0" + minutes;
+      //if(minutes.length < 2) minutes = "0" + minutes;
       var seconds = Math.floor((timestamp / 1000) % 60) + "";
       if(seconds.length < 2) seconds = "0" + seconds;
       return minutes + ":" + seconds;
+    },
+    
+    /** 0:13 / 2:42 */
+    durationString : function(timestamp, duration){
+      return this.timestampToTimestring(timestamp) + " / " + this.timestampToTimestring(duration);
     }
   };
 });
