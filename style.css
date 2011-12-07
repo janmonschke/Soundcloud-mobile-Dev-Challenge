@@ -32,18 +32,16 @@ header{
 
 #artist_info{
     margin: 5px 0px;
-    position: relative;
     min-height: 100px;
+    color: #ccc;
 }
 
 #artist_info img{
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    margin-right: 10px;
+    float: left;
 }
 
 #controls{
-
     position: absolute;
     width: 70px;
     height: 70px;
@@ -116,7 +114,6 @@ header{
 
 .comment{
     list-style-type: none;
-    height: 40px;
     margin: 5px;
     background-color: #ddd;
     border-radius: 4px;

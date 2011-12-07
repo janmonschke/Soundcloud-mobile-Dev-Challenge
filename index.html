@@ -75,9 +75,12 @@
   <script id="tmpl_player" type="template/mustache">
     <div id="artist_info">
       <img src="{{artwork_url}}" alt="user image" />
-      {{user.username}}
-      {{title}}
-      {{duration}}
+      <div id="caption">
+        <p>{{user.username}}</p>
+        <p>{{title}}</p>
+        <p id="duration">{{duration_string}}</p>
+      </div>
+      
     </div>
     <div id="visual_player_container">
       <div id="controls">
