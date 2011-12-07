@@ -102,9 +102,9 @@
     <li class="comment" data-url-second="{{ time }}">
       <img src="{{ user.avatar_url }}" alt="avatar"/>
       <div class="content">
-        <span class="time" data-timestamp="{{ timestamp }}">{{ time }}</span>
-        {{ body }}
         <a href="{{ user.permalink_url }}">{{ user.username }}</a>
+        <span class="time" data-timestamp="{{ timestamp }}">{{ time }}</span>: 
+        {{ body }}
       </div>
     </li>
   </script>

@@ -28,6 +28,8 @@ PlayerWidget.prototype.__trackReceived = function(track){
   
   this.$player.bind("progress", this.loadingProgress);
   
+  this.$player.bind("timeupdate", this.updatePlayeProgress);
+
   this.$player.bind("canplay", this.canplay);  
   
   $("#controls button").bind("touchstart", this.buttonTouched);
@@ -50,8 +52,7 @@ PlayerWidget.prototype.loadingProgress = function(){
   $('#wave_form_progress').css("width",progress+"%");
 };
 
-PlayerWidget.prototype.updatePlayedProgress = function(){
-  alert("" + this.player.currentTime + " " + this.player.duration);
+PlayerWidget.prototype.updatePlayeProgress = function(){
   $('#wave_form_played').css("width", ((this.player.currentTime / this.player.duration)*100)+"%");
 };
 
@@ -62,19 +63,9 @@ PlayerWidget.prototype.touchToSeek = function(event){
 
 PlayerWidget.prototype.buttonTouched = function(){
   if(this.player.paused){
-    // due to problems with the android browser not firing timeupdate events (at least they didn't fire on my milestone)
-    // set an interval for updating the progress
-    if(navigator.userAgent.toLowerCase().indexOf('android') != -1){
-      this.__interVal = setInterval(this.updatePlayedProgress, 200);
-    }
-    else{
-      this.$player.bind("timeupdate", this.updatePlayedProgress);
-    }
-
     $("#controls button").removeClass("play").addClass("pause");
     this.player.play();
   }else{
-    clearInterval(this.__interval);
     $("#controls button").removeClass("pause").addClass("play")
     this.player.pause();
   }
