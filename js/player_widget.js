@@ -68,7 +68,7 @@ PlayerWidget.prototype.touchToSeek = function(event){
 };
 
 PlayerWidget.prototype.buttonTouched = function(ev){
-  ev.PreventDefault();
+  ev.preventDefault();
   ev.stopPropagation();
   if(this.player.paused){
     if(!this.androidPlayHacked){
