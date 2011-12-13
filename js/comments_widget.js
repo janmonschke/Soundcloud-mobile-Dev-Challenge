@@ -43,8 +43,9 @@ CommentsWidget.prototype.__commentsReceived = function(comments){
   
   // seek to comment time on tap
   $('.time').each(function(index, elem){
-    $(elem).tap(function(){
+    $(elem).bind("touchstart", function(){
       player.currentTime = parseInt($(this).data('timestamp')) / 1000;
+      alert(parseInt($(this).data('timestamp')) / 1000);
     })
   });
  
