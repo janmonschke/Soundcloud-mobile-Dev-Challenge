@@ -67,7 +67,9 @@ PlayerWidget.prototype.touchToSeek = function(event){
   this.player.currentTime = this.player.duration * relative_position;
 };
 
-PlayerWidget.prototype.buttonTouched = function(){
+PlayerWidget.prototype.buttonTouched = function(ev){
+  ev.PreventDefault();
+  ev.stopPropagation();
   if(this.player.paused){
     if(!this.androidPlayHacked){
       var fireOnThis = document.getElementById('wave_form_container');
