@@ -85,7 +85,7 @@
   
   <script id="tmpl_comment" type="template/mustache">
     <li class="comment" data-url-second="{{ time }}">
-      <img src="{{ user.avatar_url }}" alt="avatar"/>
+      <a href="{{ user.permalink_url }}"><img src="{{ user.avatar_url }}" alt="avatar"/></a>
       <div class="content">
         {{ user.username }}
         <span class="time" data-timestamp="{{ timestamp }}">{{ time }}</span>: 
