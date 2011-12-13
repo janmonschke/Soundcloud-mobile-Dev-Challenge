@@ -61,7 +61,7 @@ PlayerWidget.prototype.updatePlayeProgress = function(){
 };
 
 PlayerWidget.prototype.touchToSeek = function(event){
-  if(!this.hacked) {this.hacked = true; return null;}
+  if(!this.hacked) {this.hacked = true; this.player.currentTime = 0; return null;}
   var relative_position = (event.touches[0].clientX - 70 ) / $("#wave_form_container").width();
   this.player.currentTime = this.player.duration * relative_position;
 };
