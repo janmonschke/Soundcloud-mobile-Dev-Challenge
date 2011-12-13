@@ -1,13 +1,15 @@
+/** The Player Widget */
 var PlayerWidget = function(_trackUrl){
   this.trackUrl = _trackUrl;
-  this.androidPlayHacked = false;
   _.bindAll(this);
 };
 
+/** Gets the track basically */
 PlayerWidget.prototype.init = function(){
   SC.get(this.trackUrl, this.__trackReceived);
 };
 
+/** Initiates the Widget */
 PlayerWidget.prototype.__trackReceived = function(track){
   this.track = track;
   
@@ -74,13 +76,12 @@ PlayerWidget.prototype.touchToSeek = function(event){
   this.player.currentTime = this.player.duration * relative_position;
 };
 
-
+/** Play and pause the player */
 PlayerWidget.prototype.buttonTouched = function(ev){
   ev.preventDefault();
   ev.stopPropagation();
   
   if(this.player.paused){
-
     $("#controls button").removeClass("play").addClass("pause");
     this.player.play();
   }else{

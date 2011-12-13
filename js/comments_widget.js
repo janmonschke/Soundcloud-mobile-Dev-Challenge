@@ -1,3 +1,4 @@
+/** The Comments Widget */
 var CommentsWidget = function(_commentsUrl, _track, _player, _$player){
   this.commentsUrl = _commentsUrl;
   this.track = _track;
@@ -6,12 +7,14 @@ var CommentsWidget = function(_commentsUrl, _track, _player, _$player){
   _.bindAll(this);
 }
 
+/** Gets the comments */
 CommentsWidget.prototype.init = function(){
   this.$player.bind("timeupdate", this.updateCurrentComment);
   
   SC.get(this.commentsUrl.replace(".json", "/comments.json"), this.__commentsReceived);
 };
 
+/* Renders the comments and binds events to them */
 CommentsWidget.prototype.__commentsReceived = function(comments){
   var commentsList = $('#comments');
   commentsList.html("");
@@ -47,6 +50,7 @@ CommentsWidget.prototype.__commentsReceived = function(comments){
  
 };
 
+/** Fetches the comment that has been made at the currentTime and prepends it */
 CommentsWidget.prototype.updateCurrentComment = function(){
   var curr_formated_time = Helper.timestampToTimestring(this.player.currentTime*1000);
   var found_elem = $("[data-url-second='"+curr_formated_time+"']");
