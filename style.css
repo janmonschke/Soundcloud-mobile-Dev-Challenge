@@ -141,6 +141,7 @@ header{
 .comment .time{
     background-color: #bbb;
     border-radius: 3px;
+    padding: 3px;
 }
 
 .comment .time:hover{
