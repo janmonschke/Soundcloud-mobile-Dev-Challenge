@@ -1,6 +1,6 @@
 var PlayerWidget = function(_trackUrl){
   this.trackUrl = _trackUrl;
-  this.hacked = false;
+  this.androidPlayHacked = false;
   _.bindAll(this);
 };
 
@@ -39,6 +39,7 @@ PlayerWidget.prototype.__trackReceived = function(track){
 };
 
 PlayerWidget.prototype.canplay = function(){
+  this.player.currentTime = 0;
   $("#wave_form_container").bind("touchstart", this.touchToSeek);
 };
 
@@ -61,14 +62,14 @@ PlayerWidget.prototype.updatePlayeProgress = function(){
 };
 
 PlayerWidget.prototype.touchToSeek = function(event){
-  if(!this.hacked) {this.hacked = true; this.player.currentTime = 0; return null;}
+
   var relative_position = (event.touches[0].clientX - 70 ) / $("#wave_form_container").width();
   this.player.currentTime = this.player.duration * relative_position;
 };
 
 PlayerWidget.prototype.buttonTouched = function(){
   if(this.player.paused){
-    if(!this.hacked){
+    if(!this.androidPlayHacked){
       var fireOnThis = document.getElementById('wave_form_container');
       var evObj = document.createEvent('MouseEvents');
       evObj.initMouseEvent( 'click', true, true, window, 1, 12, 345, 7, 220, false, false, true, false, 0, null );
