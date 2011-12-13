@@ -25,8 +25,10 @@ PlayerWidget.prototype.__trackReceived = function(track){
   this.player = $("#the_player")[0];
   this.$player = $(this.player);
   
+  // start fetching the comments
   this.initComments();
 
+  // bind to the necessary events
   this.$player.bind("ended", this.playbackEnded);
   
   this.$player.bind("progress", this.loadingProgress);
@@ -38,45 +40,47 @@ PlayerWidget.prototype.__trackReceived = function(track){
   $("#controls button").bind("touchend", this.buttonTouched);
 };
 
+/** Initiates the player and the wave form */
 PlayerWidget.prototype.canplay = function(){
-  this.player.currentTime = 0;
+  this.player.currentTime = 0; // somehow the Android browser did not fire "timeupdate" events until I set this initially
   $("#wave_form_container").bind("touchstart", this.touchToSeek);
 };
 
+/** Initiates a new Comments widget */
 PlayerWidget.prototype.initComments = function(){
   new CommentsWidget(this.trackUrl, this.track, this.player, this.$player).init();
 };
 
+/** Change the button on end */
 PlayerWidget.prototype.playbackEnded = function(){
   $('#controls button').removeClass("pause").addClass("play")
 };
 
+/** Update the wave form loading progess */
 PlayerWidget.prototype.loadingProgress = function(){
   var progress = Math.ceil((this.player.buffered.end(0) / this.player.duration) * 100);
   $('#wave_form_progress').css("width",progress+"%");
 };
 
+/** Update the wave form played progess */
 PlayerWidget.prototype.updatePlayeProgress = function(){
   $('#duration').text(Helper.durationString(this.player.currentTime * 1000, this.player.duration * 1000));
   $('#wave_form_played').css("width", ((this.player.currentTime / this.player.duration)*100)+"%");
 };
 
+/** Seek to the position the user has touched */
 PlayerWidget.prototype.touchToSeek = function(event){
-
   var relative_position = (event.touches[0].clientX - 70 ) / $("#wave_form_container").width();
   this.player.currentTime = this.player.duration * relative_position;
 };
 
+
 PlayerWidget.prototype.buttonTouched = function(ev){
   ev.preventDefault();
   ev.stopPropagation();
+  
   if(this.player.paused){
-    if(!this.androidPlayHacked){
-      var fireOnThis = document.getElementById('wave_form_container');
-      var evObj = document.createEvent('MouseEvents');
-      evObj.initMouseEvent( 'click', true, true, window, 1, 12, 345, 7, 220, false, false, true, false, 0, null );
-      fireOnThis.dispatchEvent(evObj);
-    }
+
     $("#controls button").removeClass("play").addClass("pause");
     this.player.play();
   }else{
