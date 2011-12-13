@@ -45,7 +45,7 @@ PlayerWidget.prototype.__trackReceived = function(track){
 /** Initiates the player and the wave form */
 PlayerWidget.prototype.canplay = function(){
   this.player.currentTime = 0; // somehow the Android browser did not fire "timeupdate" events until I set this initially
-  $("#wave_form_container").tap(this.touchToSeek);
+  $("#wave_form_container").bind("touchend", this.touchToSeek);
 };
 
 /** Initiates a new Comments widget */
