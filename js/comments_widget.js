@@ -10,6 +10,7 @@ var CommentsWidget = function(_commentsUrl, _track, _player, _$player){
 /** Gets the comments */
 CommentsWidget.prototype.init = function(){
   this.$player.bind("timeupdate", this.updateCurrentComment);
+  $("#wave_form_comments").html("");
   
   SC.get(this.commentsUrl.replace(".json", "/comments.json"), this.__commentsReceived);
 };
